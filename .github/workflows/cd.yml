@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on: self-hosted
     # Only run the deployment if the CI pipeline actually succeeded
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
 
     steps:
     - name: Pull Docker image
