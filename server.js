@@ -9,6 +9,13 @@ app.get('/',(req,res)=>{
     })
 });
 
+app.get('/about',(req,res)=>{
+    res.status(200).json({
+        sucess:true,
+        messsage:'Hello From About'
+    })
+})
+
 const Server = () =>{
     app.listen(PORT,()=>{
         console.log(`App Is running On ${PORT}`);
