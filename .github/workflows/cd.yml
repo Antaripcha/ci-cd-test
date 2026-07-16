@@ -1,0 +1,23 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    # Only run the deployment if the CI pipeline actually succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - name: Pull Docker image
+      run: sudo docker pull antarip4/ci-cd-test:latest
+
+    - name: Delete Old docker container
+      run: sudo docker rm -f cicd-pipeline-container || true
+
+    - name: Run Docker Container 
+      run: sudo docker run -d -p 2000:2000 --name cicd-pipeline-container --restart always antarip4/ci-cd-test:latest
